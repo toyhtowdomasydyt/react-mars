@@ -1,8 +1,8 @@
 import React from 'react';
 
-import {Typography, CardContent, Card, Divider, Box} from '@mui/material';
+import {Typography, Divider, Box} from '@mui/material';
 
-const RoverInfoCard = ({manifest}) => {
+const RoverInfo = ({manifest}) => {
   if (Object.keys(manifest).length !== 0) {
     return (
       <Box padding={3}>
@@ -39,4 +39,4 @@ const RoverInfoCard = ({manifest}) => {
   );
 }
 
-export default RoverInfoCard;
+export default RoverInfo;

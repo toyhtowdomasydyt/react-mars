@@ -7,7 +7,7 @@ import {FetchFromApi} from '../util/FetchFromApi';
 
 import Search from './Search';
 import Result from './Result';
-import RoverInfoCard from './RoverInfoCard';
+import RoverInfo from './RoverInfo';
 
 class App extends Component {
   constructor(props) {
@@ -17,7 +17,7 @@ class App extends Component {
       photoDetails: {
         roverName: '',
         roverCamera: '',
-        sol: 0
+        sol: ''
       },
       resultData: {},
       manifest: {},
@@ -109,7 +109,7 @@ class App extends Component {
               <ThemeProvider theme={this.cardTheme}>
                 <Grid item xs={12} md={6} lg={4} minHeight='280px'>
                   <Box sx={{height: '100%', bgcolor: '#101010'}}>
-                    <RoverInfoCard manifest={manifest}/>
+                    <RoverInfo manifest={manifest}/>
                   </Box>
                 </Grid>
               </ThemeProvider>
