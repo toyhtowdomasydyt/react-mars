@@ -1,10 +1,6 @@
 import axios from 'axios';
 
 export class FetchFromApi {
-  constructor(apiKey) {
-    this.apiKey = apiKey;
-  }
-
   static uri = {
     baseReqUri: 'https://api.nasa.gov/mars-photos/api/v1/',
     reqPhotosStart: 'rovers/',
