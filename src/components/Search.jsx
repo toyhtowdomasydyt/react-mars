@@ -14,14 +14,14 @@ class Search extends Component {
     this.state = {
       allRovers: [...allRovers],
       roverCameras: [],
-      roverName: this.props.searchFields.roverName,
-      roverCamera: this.props.searchFields.roverCamera,
-      sol: this.props.searchFields.sol,
+      roverName: props.searchFields.roverName,
+      roverCamera: props.searchFields.roverCamera,
+      sol: props.searchFields.sol,
       solMax: 0
     }
 
     this.apiKey = process.env.REACT_APP_NASA_API_KEY;
-    this.handleSearch = this.props.handleSearch;
+    this.handleSearch = props.handleSearch;
   }
 
   handleRoverSelectChange = async (event) => {
@@ -36,6 +36,8 @@ class Search extends Component {
     ));
 
     const manifest = await FetchFromApi.getMissionManifest(this.apiKey, roverName);
+
+    console.log(manifest);
 
     this.setState(() => (
       {

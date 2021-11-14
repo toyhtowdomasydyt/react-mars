@@ -3,6 +3,7 @@ import React, {Component} from 'react';
 import {FetchFromApi} from '../util/FetchFromApi';
 
 import Search from './Search';
+import Result from './Result';
 
 class App extends Component {
   constructor(props) {
@@ -14,7 +15,7 @@ class App extends Component {
         roverCamera: '',
         sol: 0
       },
-      searchData: {}
+      resultData: {}
     }
 
     this.apiKey = process.env.REACT_APP_NASA_API_KEY;
@@ -36,20 +37,24 @@ class App extends Component {
         roverCamera,
         sol,
       },
-      searchData: {
+      resultData: {
         ...data
       }
-    }), () => console.log(this.state.searchData));
+    }));
   }
 
   render() {
     const {roverName, roverCamera, sol} = this.state.photoDetails;
+    const {resultData} = this.state;
 
     return (
       <div>
         <Search
           handleSearch={this.handleSearch}
           searchFields={{roverName, roverCamera, sol}}
+        />
+        <Result
+          resultData={resultData.photos || []}
         />
       </div>
     );
