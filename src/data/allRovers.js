@@ -1,1 +1,5 @@
-export const allRovers = ['Curiosity', 'Opportunity', 'Spirit'];
+export const allRovers = [
+  'Curiosity',
+  'Opportunity',
+  'Spirit'
+];
