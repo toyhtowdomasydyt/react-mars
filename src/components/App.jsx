@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
 
+import {Container, Box} from '@mui/material';
+
 import {FetchFromApi} from '../util/FetchFromApi';
 
 import Search from './Search';
@@ -48,15 +50,29 @@ class App extends Component {
     const {resultData} = this.state;
 
     return (
-      <div>
-        <Search
-          handleSearch={this.handleSearch}
-          searchFields={{roverName, roverCamera, sol}}
-        />
-        <Result
-          resultData={resultData.photos || []}
-        />
-      </div>
+      <Container
+        sx={{
+          padding: '1rem',
+          height: '100vh',
+        }}
+      >
+        <Box
+          padding={3}
+          borderRadius={2}
+          bgcolor='white'
+          mb={3}
+        >
+          <Search
+            handleSearch={this.handleSearch}
+            searchFields={{roverName, roverCamera, sol}}
+          />
+        </Box>
+        <Box>
+          <Result
+            resultData={resultData.photos || []}
+          />
+        </Box>
+      </Container>
     );
   }
 }
