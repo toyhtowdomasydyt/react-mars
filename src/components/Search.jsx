@@ -23,6 +23,7 @@ class Search extends Component {
 
     this.apiKey = process.env.REACT_APP_NASA_API_KEY;
     this.handleSearch = props.handleSearch;
+    this.handleManifestGet = props.handleManifestGet;
   }
 
   handleRoverSelectChange = async (event) => {
@@ -38,7 +39,7 @@ class Search extends Component {
 
     const manifest = await FetchFromApi.getMissionManifest(this.apiKey, roverName);
 
-    console.log(manifest);
+    this.handleManifestGet(manifest.photo_manifest);
 
     this.setState(() => (
       {
