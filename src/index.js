@@ -3,24 +3,21 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './components/App';
 
-import {CssBaseline} from '@mui/material';
-import {createTheme, ThemeProvider} from '@mui/material/styles'
-import useMediaQuery from '@mui/material/useMediaQuery';
+import {createTheme, ThemeProvider} from '@mui/material/styles';
 
-// const prefersDarkMode = useMediaQuery('(prefers-color-scheme: dark)');
+const darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
 const theme = createTheme({
   palette: {
-    mode: 'dark'
+    mode: darkTheme ? 'dark' : 'light'
   }
-})
+});
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>
     <React.StrictMode>
       <App/>
     </React.StrictMode>
-  </ThemeProvider>
-  ,
+  </ThemeProvider>,
   document.getElementById('root')
 );
