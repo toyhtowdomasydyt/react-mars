@@ -1,10 +1,12 @@
-import React, {Component} from 'react';
+import React from 'react';
+
+import {Grid} from '@mui/material';
 
 import ImageCard from './ImageCard';
 
 const Result = ({resultData}) => {
   return (
-    <div>
+    <Grid container rowSpacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
       {resultData.map(photo => {
         const photoDetails = {
           roverName: photo.rover.name,
@@ -13,17 +15,16 @@ const Result = ({resultData}) => {
           dateOnEarth: photo.earth_date
         }
 
-        console.log(photo)
-
         return (
-          <ImageCard
-            key={photo.id}
-            photo={photo.img_src}
-            details={photoDetails}
-          />
+          <Grid key={photo.id} item xs={12} md={6} lg={4}>
+            <ImageCard
+              photo={photo.img_src}
+              details={photoDetails}
+            />
+          </Grid>
         );
       })}
-    </div>
+    </Grid>
   );
 }
 
