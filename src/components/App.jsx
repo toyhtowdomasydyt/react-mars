@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-import {Container, Box, Grid, Card, CardContent} from '@mui/material';
+import {Container, Box, Grid, Card} from '@mui/material';
+import {ThemeProvider, createTheme} from '@mui/material/styles';
 
 import {FetchFromApi} from '../util/FetchFromApi';
 
@@ -24,13 +25,20 @@ class App extends Component {
     }
 
     this.apiKey = process.env.REACT_APP_NASA_API_KEY;
+    this.cardTheme = createTheme({
+      palette: {
+        mode: 'dark'
+      }
+    });
   }
 
   handleManifestGet = manifest => {
     this.setState(() => ({manifest}));
   }
 
-  handleSearch = async event=> {
+  handleSearch = async event => {
+    this.setState(() => ({searched: false}));
+
     event.preventDefault();
     const form = event.target;
     const roverName = form.roverSelect.value;
@@ -62,25 +70,30 @@ class App extends Component {
         sx={{
           padding: '1rem',
           height: '100vh',
+          bgcolor: 'transparent'
         }}
       >
-        <Grid container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }} mb={3}>
-          <Grid item xs={12} md={6} lg={4}>
-            <RoverInfoCard manifest={manifest}/>
-          </Grid>
-          <Grid item xs={12} md={6} lg={8}>
-            <Card>
-              <CardContent>
+        <Box mb={3}>
+          <Card>
+            <Grid container rowSpacing={2} columnSpacing={3}>
+              <ThemeProvider theme={this.cardTheme}>
+                <Grid item xs={12} md={6} lg={4} minHeight='280px'>
+                  <Box sx={{height: '100%', bgcolor: '#101010'}}>
+                    <RoverInfoCard manifest={manifest}/>
+                  </Box>
+                </Grid>
+              </ThemeProvider>
+              <Grid item xs={12} md={6} lg={8}>
                 <Search
                   handleSearch={this.handleSearch}
                   handleManifestGet={this.handleManifestGet}
                   searchFields={{roverName, roverCamera, sol}}
                 />
-              </CardContent>
-            </Card>
-          </Grid>
-        </Grid>
-        <Box>
+              </Grid>
+            </Grid>
+          </Card>
+        </Box>
+        <Box paddingBottom={3}>
           <Result resultData={resultData.photos || []} searched={searched}/>
         </Box>
       </Container>

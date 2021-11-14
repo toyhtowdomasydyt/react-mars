@@ -5,7 +5,13 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f1f1f1;
+  background-color: #fcfcfc;
+}
+
+@media (prefers-color-scheme: dark) {
+  body {
+    background-color: #2e2e2e;
+  }
 }
 
 code {
