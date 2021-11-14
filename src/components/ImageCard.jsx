@@ -1,5 +1,5 @@
 import React from 'react';
-import {Card, CardContent, CardMedia, Typography} from '@mui/material';
+import {Card, CardContent, CardMedia, Typography, Divider} from '@mui/material';
 
 const ImageCard = ({photo, details}) => {
   return (
@@ -14,8 +14,12 @@ const ImageCard = ({photo, details}) => {
         <Typography gutterBottom variant="h5" component="div">
           {`Photo from ${details.roverName}`}
         </Typography>
+        <Divider/>
+        <Typography variant="body2" color="text.secondary" mt={2} mb={1}>
+          Photo made by "{details.roverCamera}"
+        </Typography>
         <Typography variant="body2" color="text.secondary">
-          {`Photo made by "${details.roverCamera}" at ${details.sol} sol (${details.dateOnEarth} on Earth)`}
+          At {details.sol} sol ({details.dateOnEarth} on Earth)
         </Typography>
       </CardContent>
     </Card>
