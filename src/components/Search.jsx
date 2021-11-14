@@ -14,10 +14,10 @@ class Search extends Component {
     this.state = {
       allRovers: [...allRovers],
       roverCameras: [],
-      roverName: '',
-      roverCamera: '',
-      solMax: 0,
-      sol: 0
+      roverName: this.props.searchFields.roverName,
+      roverCamera: this.props.searchFields.roverCamera,
+      sol: this.props.searchFields.sol,
+      solMax: 0
     }
 
     this.apiKey = process.env.REACT_APP_NASA_API_KEY;
@@ -63,50 +63,54 @@ class Search extends Component {
 
   render() {
     const {allRovers, roverCameras, roverName, roverCamera, solMax, sol} = this.state;
-    console.log(sol)
 
     return (
-      <Box sx={{minWidth: 120, mt: 3}}>
-        <FormControl fullWidth sx={{mb: 5}}>
-          <InputLabel id='rover-select'>Rovers</InputLabel>
-          <Select
-            labelId='rover-select'
-            value={roverName}
-            label='Rovers'
-            onChange={this.handleRoverSelectChange}
+      <form onSubmit={this.handleSearch}>
+        <Box sx={{minWidth: 120, mt: 3}}>
+          <FormControl fullWidth sx={{mb: 5}}>
+            <InputLabel id='rover-select'>Rovers</InputLabel>
+            <Select
+              name='roverSelect'
+              labelId='rover-select'
+              value={roverName}
+              label='Rovers'
+              onChange={this.handleRoverSelectChange}
+            >
+              {allRovers.map((item) => (
+                <MenuItem key={item} value={item}>{item}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <FormControl
+            fullWidth
+            disabled={roverCameras.length === 0}
+            sx={{mb: 5}}
           >
-            {allRovers.map((item) => (
-              <MenuItem key={item} value={item}>{item}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <FormControl
-          fullWidth
-          disabled={roverCameras.length === 0}
-          sx={{mb: 5}}
-        >
-          <InputLabel id='camera-select'>Cameras</InputLabel>
-          <Select
-            labelId='camera-select'
-            value={roverCamera}
-            label='Cameras'
-            onChange={this.handleCameraSelectChange}
-          >
-            {roverCameras.map((item) => (
-              <MenuItem key={item.abbr} value={item.abbr}>{item.fullName}</MenuItem>
-            ))}
-          </Select>
-        </FormControl>
-        <TextField
-          id="sol"
-          label="Sol"
-          variant="outlined"
-          value={sol}
-          onChange={this.handleSolChange}
-          inputProps={{ inputMode: 'numeric', min: 0, max: solMax}}
-        />
-        <Button variant="contained" onClick={this.handleSearch}>Search</Button>
-      </Box>
+            <InputLabel id='camera-select'>Cameras</InputLabel>
+            <Select
+              name='cameraSelect'
+              labelId='camera-select'
+              value={roverCamera}
+              label='Cameras'
+              onChange={this.handleCameraSelectChange}
+            >
+              {roverCameras.map((item) => (
+                <MenuItem key={item.abbr} value={item.abbr}>{item.fullName}</MenuItem>
+              ))}
+            </Select>
+          </FormControl>
+          <TextField
+            id="sol"
+            name='sol'
+            label="Sol"
+            variant="outlined"
+            value={sol}
+            onChange={this.handleSolChange}
+            inputProps={{ inputMode: 'numeric', min: 0, max: solMax}}
+          />
+          <Button variant="contained" type='submit'>Search</Button>
+        </Box>
+      </form>
     );
   }
 }
