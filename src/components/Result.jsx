@@ -1,11 +1,11 @@
 import React from 'react';
 
-import {Grid} from '@mui/material';
+import {Grid, Button} from '@mui/material';
 
 import ImageCard from './ImageCard';
 import AutoHideAlert from './AutoHideAlert';
 
-const Result = ({resultData, searched}) => {
+const Result = ({resultData, searched, handleLoadMore, endOfData, page}) => {
   return (
     <Grid container rowSpacing={3} columnSpacing={{xs: 1, sm: 2, md: 3}}>
       {
@@ -37,6 +37,20 @@ const Result = ({resultData, searched}) => {
           </Grid>
         );
       })}
+      {resultData.length > 0 && !endOfData && (
+        <Grid item xs={12}>
+          <Button fullWidth variant="contained" onClick={handleLoadMore}>Load more</Button>
+        </Grid>
+      )}
+      {endOfData && page > 1 && (
+        <Grid item xs={12}>
+          <AutoHideAlert
+            type='warning'
+            delayMs={6000}
+            title="That's all"
+          />
+        </Grid>
+      )}
     </Grid>
   );
 }

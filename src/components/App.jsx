@@ -21,7 +21,9 @@ class App extends Component {
       },
       resultData: {},
       manifest: {},
-      searched: false
+      searched: false,
+      end: false,
+      page: 1
     }
 
     this.apiKey = process.env.REACT_APP_NASA_API_KEY;
@@ -32,12 +34,41 @@ class App extends Component {
     });
   }
 
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevState.page !== this.state.page) {
+      this.loadData();
+    }
+  }
+
   handleManifestGet = manifest => {
     this.setState(() => ({manifest}));
   }
 
-  handleSearch = async event => {
-    this.setState(() => ({searched: false}));
+  loadData = async () => {
+    const {roverName, roverCamera, sol} = this.state.photoDetails;
+    const page = this.state.page;
+
+    const data = await FetchFromApi
+      .getPhotosByRoverCameraSol(this.apiKey, roverName, roverCamera, sol, page);
+
+    if (data.photos.length === 0) {
+      this.setState(() => ({end: true}));
+    }
+
+    this.setState(prevState => {
+      const prevArray = prevState.resultData.photos || [];
+
+      return {
+        resultData: {
+          photos: [...prevArray, ...data.photos]
+        },
+        searched: true
+      }
+    });
+  }
+
+  handleSearch = event => {
+    this.setState(() => ({searched: false, end: false, resultData: {}}));
 
     event.preventDefault();
     const form = event.target;
@@ -45,25 +76,24 @@ class App extends Component {
     const roverCamera = form.cameraSelect.value;
     const sol = form.sol.value;
 
-    const data = await FetchFromApi
-      .getPhotosByRoverCameraSol(this.apiKey, roverName, roverCamera, sol);
-
     this.setState(() => ({
       photoDetails: {
         roverName,
         roverCamera,
         sol,
-      },
-      resultData: {
-        ...data
-      },
-      searched: true
+      }
+    }), () => this.loadData());
+  }
+
+  handleLoadMore = () => {
+    this.setState(prevState => ({
+      page: prevState.page + 1
     }));
   }
 
   render() {
     const {roverName, roverCamera, sol} = this.state.photoDetails;
-    const {resultData, manifest, searched} = this.state;
+    const {resultData, manifest, searched, end, page} = this.state;
 
     return (
       <Container
@@ -94,7 +124,13 @@ class App extends Component {
           </Card>
         </Box>
         <Box paddingBottom={3}>
-          <Result resultData={resultData.photos || []} searched={searched}/>
+          <Result
+            resultData={resultData.photos || []}
+            searched={searched}
+            handleLoadMore={this.handleLoadMore}
+            endOfData={end}
+            page={page}
+          />
         </Box>
       </Container>
     );
