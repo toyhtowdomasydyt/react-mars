@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 
-import {Box, InputLabel, MenuItem, FormControl, Select, TextField, Button} from '@mui/material';
+import {FormControl, TextField, Button} from '@mui/material';
+import BasicSelect from './BasicSelect';
 
 import {FetchFromApi} from '../util/FetchFromApi';
 
@@ -68,39 +69,30 @@ class Search extends Component {
 
     return (
       <form onSubmit={this.handleSearch}>
-        <Box sx={{minWidth: 120, mt: 3}}>
-          <FormControl fullWidth sx={{mb: 5}}>
-            <InputLabel id='rover-select'>Rovers</InputLabel>
-            <Select
-              name='roverSelect'
-              labelId='rover-select'
-              value={roverName}
-              label='Rovers'
-              onChange={this.handleRoverSelectChange}
-            >
-              {allRovers.map((item) => (
-                <MenuItem key={item} value={item}>{item}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
-          <FormControl
-            fullWidth
-            disabled={roverCameras.length === 0}
-            sx={{mb: 5}}
-          >
-            <InputLabel id='camera-select'>Cameras</InputLabel>
-            <Select
-              name='cameraSelect'
-              labelId='camera-select'
-              value={roverCamera}
-              label='Cameras'
-              onChange={this.handleCameraSelectChange}
-            >
-              {roverCameras.map((item) => (
-                <MenuItem key={item.abbr} value={item.abbr}>{item.fullName}</MenuItem>
-              ))}
-            </Select>
-          </FormControl>
+        <FormControl fullWidth sx={{mb: 3}}>
+          <BasicSelect
+            value={roverName}
+            label='Rover'
+            name='roverSelect'
+            id='roverSelect'
+            handleChange={this.handleRoverSelectChange}
+            options={allRovers.map(item => ({'abbr': item, 'fullName': item}))}
+          />
+        </FormControl>
+        <FormControl
+          fullWidth sx={{mb: 3}}
+          disabled={roverCameras.length === 0}
+        >
+          <BasicSelect
+            value={roverCamera}
+            label='Camera'
+            name='cameraSelect'
+            id='cameraSelect'
+            handleChange={this.handleCameraSelectChange}
+            options={roverCameras}
+          />
+        </FormControl>
+        <FormControl fullWidth sx={{mb: 3}}>
           <TextField
             id="sol"
             name='sol'
@@ -110,8 +102,8 @@ class Search extends Component {
             onChange={this.handleSolChange}
             inputProps={{ inputMode: 'numeric', min: 0, max: solMax}}
           />
-          <Button variant="contained" type='submit'>Search</Button>
-        </Box>
+        </FormControl>
+        <Button variant="contained" type='submit'>Search</Button>
       </form>
     );
   }

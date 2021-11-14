@@ -1,7 +1,7 @@
 import React from 'react';
 import {InputLabel, MenuItem, Select} from '@mui/material';
 
-const BasicSelect = ({name, label, id, value, options, handleChange}) => {
+const BasicSelect = ({name, label, id, value, options, handleChange, otherProps}) => {
   return (
     <>
       <InputLabel id={`label-${id}`}>{label}</InputLabel>
@@ -12,6 +12,7 @@ const BasicSelect = ({name, label, id, value, options, handleChange}) => {
         value={value}
         label={label}
         onChange={handleChange}
+        {...otherProps}
       >
         {options.map(item => (
           <MenuItem key={item.abbr} value={item.abbr}>{item.fullName}</MenuItem>
