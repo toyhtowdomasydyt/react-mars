@@ -18,7 +18,7 @@ class Search extends Component {
       roverName: props.searchFields.roverName,
       roverCamera: props.searchFields.roverCamera,
       sol: props.searchFields.sol,
-      solMax: 0
+      solMax: 0,
     }
 
     this.apiKey = process.env.REACT_APP_NASA_API_KEY;
@@ -66,7 +66,7 @@ class Search extends Component {
   };
 
   render() {
-    const {allRovers, roverCameras, roverName, roverCamera, solMax, sol} = this.state;
+    const {allRovers, roverCameras, roverName, roverCamera, sol} = this.state;
 
     return (
       <Box padding={3}>
@@ -82,7 +82,8 @@ class Search extends Component {
             />
           </FormControl>
           <FormControl
-            fullWidth sx={{mb: 3}}
+            fullWidth
+            sx={{mb: 3}}
             disabled={roverCameras.length === 0}
           >
             <BasicSelect
@@ -94,18 +95,27 @@ class Search extends Component {
               options={roverCameras}
             />
           </FormControl>
-          <FormControl fullWidth sx={{mb: 3}}>
+          <FormControl
+            fullWidth
+            sx={{mb: 3}}
+          >
             <TextField
+              disabled={roverCameras.length === 0}
               id="sol"
               name='sol'
               label="Sol"
               variant="outlined"
               value={sol}
               onChange={this.handleSolChange}
-              inputProps={{ inputMode: 'numeric', min: 0, max: solMax}}
             />
           </FormControl>
-          <Button fullWidth variant="contained" type='submit'>Search</Button>
+          <Button
+            fullWidth
+            variant="contained"
+            type='submit'
+          >
+            Search
+          </Button>
         </form>
       </Box>
     );

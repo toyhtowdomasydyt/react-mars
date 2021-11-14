@@ -8,18 +8,6 @@ import AutoHideAlert from './AutoHideAlert';
 const Result = ({resultData, searched, handleLoadMore, endOfData, page}) => {
   return (
     <Grid container rowSpacing={3} columnSpacing={{xs: 1, sm: 2, md: 3}}>
-      {
-        resultData.length === 0 && searched && (
-          <Grid item xs={12}>
-            <AutoHideAlert
-              type='warning'
-              delayMs={6000}
-              title='Sorry, there are not photos for current search query'
-              body='Please, try another one queries combination'
-            />
-          </Grid>
-        )
-      }
       {resultData.map(photo => {
         const photoDetails = {
           roverName: photo.rover.name,
@@ -40,6 +28,16 @@ const Result = ({resultData, searched, handleLoadMore, endOfData, page}) => {
       {resultData.length > 0 && !endOfData && (
         <Grid item xs={12}>
           <Button fullWidth variant="contained" onClick={handleLoadMore}>Load more</Button>
+        </Grid>
+      )}
+      {resultData.length === 0 && searched && (
+        <Grid item xs={12}>
+          <AutoHideAlert
+            type='warning'
+            delayMs={6000}
+            title='Sorry, there are not photos for current search query'
+            body='Please, try another one queries combination'
+          />
         </Grid>
       )}
       {endOfData && page > 1 && (
