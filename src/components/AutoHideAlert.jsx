@@ -2,8 +2,8 @@ import React, {Component} from 'react';
 import {Alert, AlertTitle, Snackbar, Typography} from "@mui/material";
 
 class AutoHideAlert extends Component {
-  constructor({type, title, body, delayMs}) {
-    super({type, title, body, delayMs});
+  constructor(props) {
+    super(props);
 
     this.state = {
       open: true
