@@ -68,7 +68,7 @@ class App extends Component {
   }
 
   handleSearch = event => {
-    this.setState(() => ({searched: false, end: false, resultData: {}}));
+    this.setState(() => ({searched: false, end: false, resultData: {}, page: 1}));
 
     event.preventDefault();
     const form = event.target;
