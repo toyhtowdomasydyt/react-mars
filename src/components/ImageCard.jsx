@@ -3,10 +3,10 @@ import {Card, CardContent, CardMedia, Typography} from '@mui/material';
 
 const ImageCard = ({photo, details}) => {
   return (
-    <Card sx={{ maxWidth: 345 }}>
+    <Card>
       <CardMedia
         component="img"
-        height="140"
+        height="280"
         image={photo}
         alt={`Photo from ${details.roverName}`}
       />
